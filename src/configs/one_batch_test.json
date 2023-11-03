@@ -1,0 +1,88 @@
+{
+    "name": "vanilla_rnn_test",
+    "n_gpu": 1,
+    "arch": {
+      "type": "RNNClassifier",
+      "args": {
+        "embedding_dim": 300,
+        "input_size": 300,
+        "hidden_size": 150,
+        "rnn_type": "vanilla_rnn"
+      }
+    },
+    "data": {
+      "train": {
+        "batch_size": 10,
+        "num_workers": 0,
+        "datasets": [
+          {
+            "type": "IMDbDataset",
+            "args": {
+              "split": "train",
+              "limit": 10
+            }
+          }
+        ]
+      },
+      "val": {
+        "batch_size": 10,
+        "num_workers": 0,
+        "datasets": [
+          {
+            "type": "IMDbDataset",
+            "args": {
+              "split": "train",
+              "limit": 10
+            }
+          }
+        ]
+      }
+    },
+    "optimizer": {
+      "type": "Adam",
+      "args": {
+        "lr": 3e-4
+      }
+    },
+    "loss": {
+      "type": "CrossEntropyLoss",
+      "args": {}
+    },
+    "train_metrics": [
+      {
+        "type": "AccuracyMetric",
+        "args": {
+          "name": "Accuracy"
+        }
+      }
+    ],
+    "valid_metrics": [
+      {
+        "type": "AccuracyMetric",
+        "args": {
+          "name": "Accuracy"
+        }
+      }
+    ],
+    "tokenizer": {
+      "type": "BPETokenizer",
+      "args": {
+        "path_to_data": ["data/IMDb/train/negative", "data/IMDb/train/positive"],
+        "tokenizer_dir": "saved/tokenizer_train_30000",
+        "vocab_size": 30000
+      }
+    },
+    "trainer": {
+      "epochs": 50,
+      "save_dir": "saved/",
+      "save_period": 5,
+      "verbosity": 2,
+      "monitor": "min val_loss",
+      "early_stop": 100,
+      "visualize": "wandb",
+      "wandb_project": "sentiment_classification",
+      "wandb_run_name": "VanillaRNN test",
+      "len_epoch": 100,
+      "grad_norm_clip": 10
+    }
+  }

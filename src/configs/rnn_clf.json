@@ -1,0 +1,99 @@
+{
+    "name": "lstm_wo_cell_gate",
+    "n_gpu": 1,
+    "arch": {
+      "type": "RNNClassifier",
+      "args": {
+        "embedding_dim": 256,
+        "input_size": 256,
+        "hidden_size": 128,
+        "rnn_type": "lstm",
+        "rnn_kwargs": {
+          "disabled_gate": "cell"
+        }
+      }
+    },
+    "data": {
+      "train": {
+        "batch_size": 128,
+        "num_workers": 4,
+        "datasets": [
+          {
+            "type": "IMDbDataset",
+            "args": {
+              "split": "train"
+            }
+          }
+        ]
+      },
+      "val": {
+        "batch_size": 128,
+        "num_workers": 4,
+        "datasets": [
+          {
+            "type": "IMDbDataset",
+            "args": {
+              "split": "test"
+            }
+          }
+        ]
+      }
+    },
+    "optimizer": {
+      "type": "Adam",
+      "args": {
+        "lr": 3e-4
+      }
+    },
+    "lr_scheduler": {
+      "type": "OneCycleLR",
+      "args": {
+        "steps_per_epoch": 200,
+        "epochs": 51,
+        "anneal_strategy": "cos",
+        "max_lr": 3e-4,
+        "pct_start": 0.2
+      }
+    },
+    "loss": {
+      "type": "CrossEntropyLoss",
+      "args": {}
+    },
+    "train_metrics": [
+      {
+        "type": "AccuracyMetric",
+        "args": {
+          "name": "Accuracy"
+        }
+      }
+    ],
+    "valid_metrics": [
+      {
+        "type": "AccuracyMetric",
+        "args": {
+          "name": "Accuracy"
+        }
+      }
+    ],
+    "tokenizer": {
+      "type": "BPETokenizer",
+      "args": {
+        "path_to_data": ["data/IMDb/train/negative", "data/IMDb/train/positive"],
+        "tokenizer_dir": "saved/tokenizer_train_30000",
+        "vocab_size": 30000
+      }
+    },
+    "trainer": {
+      "epochs": 50,
+      "save_dir": "saved/",
+      "save_period": 5,
+      "verbosity": 2,
+      "monitor": "min val_loss",
+      "early_stop": 100,
+      "visualize": "wandb",
+      "wandb_project": "sentiment_classification",
+      "wandb_run_name": "LSTM w/o Cell gate",
+      "len_epoch": 200,
+      "grad_norm_clip": 10
+    }
+  }
