@@ -9,8 +9,6 @@ __pycache__/
 # my files
 data/
 saved/
-Dockerfile
-Makefile
 wandb
 
 # Distribution / packaging
