@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# my files
+data/
+saved/
+Dockerfile
+Makefile
+wandb
+
 # Distribution / packaging
 .Python
 build/
