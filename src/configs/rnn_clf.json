@@ -1,5 +1,5 @@
 {
-    "name": "lstm_wo_cell_gate",
+    "name": "lstm_wo_output_gate",
     "n_gpu": 1,
     "arch": {
       "type": "RNNClassifier",
@@ -9,7 +9,7 @@
         "hidden_size": 128,
         "rnn_type": "lstm",
         "rnn_kwargs": {
-          "disabled_gate": "cell"
+          "disabled_gate": "output"
         }
       }
     },
@@ -92,7 +92,7 @@
       "early_stop": 100,
       "visualize": "wandb",
       "wandb_project": "sentiment_classification",
-      "wandb_run_name": "LSTM w/o Cell gate",
+      "wandb_run_name": "LSTM w/o Output gate",
       "len_epoch": 200,
       "grad_norm_clip": 10
     }

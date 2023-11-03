@@ -1,0 +1,15 @@
+{
+    "name": "yelp",
+    "data": {
+        "yelp": {
+            "batch_size": 128,
+            "num_workers": 4,
+            "datasets": [
+                {
+                    "type": "YelpDataset",
+                    "args": {}
+                }
+            ]
+        }
+    }
+}

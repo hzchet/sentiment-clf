@@ -4,7 +4,7 @@ import torch
 from torch.nn.utils.rnn import pad_sequence
 
 
-def collate_fn(dataset_items: List[Dict], is_labeled: bool = True):
+def collate_fn(dataset_items: List[Dict]):
     """
     collate fields in dataset_items
     """
@@ -19,7 +19,6 @@ def collate_fn(dataset_items: List[Dict], is_labeled: bool = True):
         'attention_mask': attention_masks
     }
     
-    if is_labeled:
-        data_dict['label'] = torch.tensor([item['label'] for item in dataset_items])
+    data_dict['label'] = torch.tensor([item['label'] for item in dataset_items])
         
     return data_dict
